@@ -5,6 +5,7 @@
   bun,
   makeWrapper,
   nodejs-slim,
+  typescript,
 }:
 
 # TODO: would be great to remove this once nixpkgs
@@ -53,7 +54,7 @@ in stdenv.mkDerivation rec {
   pname = "mcp-context7";
   inherit version src;
 
-  nativeBuildInputs = [ bun makeWrapper nodejs-slim ];
+  nativeBuildInputs = [ bun nodejs-slim typescript makeWrapper ];
 
   buildPhase = ''
     runHook preBuild
@@ -63,7 +64,9 @@ in stdenv.mkDerivation rec {
     cp -r ${deps}/node_modules .
     cp ${deps}/bun.lock .
 
-    bun run build
+    # compile TypeScript using Nix-provided compiler
+    tsc
+    chmod +x dist/index.js
 
     runHook postBuild
   '';
