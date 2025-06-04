@@ -53,7 +53,7 @@ in stdenv.mkDerivation rec {
   pname = "mcp-context7";
   inherit version src;
 
-  nativeBuildInputs = [ bun makeWrapper ];
+  nativeBuildInputs = [ bun makeWrapper nodejs-slim ];
 
   buildPhase = ''
     runHook preBuild
